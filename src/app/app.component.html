@@ -1,0 +1,83 @@
+<div class="slds-form slds-form_compound slds-box currency-conv">
+  <fieldset class="slds-form-element">
+    <legend class="slds-form-element__label slds-text-title_caps">Currency converter</legend>
+    <div class="slds-form-element__group">
+      <label class="slds-form-element__label" for="text-input-id-1">Type in amount and select currency:</label>
+      <div class="slds-form-element__row">
+        <div class="slds-form-element slds-size_1-of-2">
+          <div class="slds-form-element__control">
+            <input
+              type="number"
+              id="text-input-id-1"
+              class="slds-input"
+              [(ngModel)]="inputAmount"
+              [value]="inputAmout | number:'0.2-2'"
+              [ngModelOptions]="{debounce: 300}"
+              (keyup)="convert()"
+              placeholder="0.00"
+              step="0.01"
+              min="0"
+            />
+          </div>
+        </div>
+        <div class="slds-form-element slds-size_1-of-2">
+          <div class="slds-form-element__control">
+            <div class="slds-select_container">
+              <select class="slds-select" id="select-01" [(ngModel)]="convertedFrom" (change)="selectCurrency()">
+                <option *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <label class="slds-form-element__label" for="text-input-id-2">Converted amount:</label>
+      <div class="slds-form-element__row">
+        <div class="slds-form-element slds-size_1-of-2">
+          <div class="slds-form-element__control">
+            <input
+              type="text"
+              id="text-input-id-2"
+              class="slds-input"
+              [value]="convertedAmount | number:'.2-2'"
+              placeholder="0.00"
+              step="0.01"
+              min="0"
+              readonly=""
+            />
+          </div>
+        </div>
+        <div class="slds-form-element slds-size_1-of-2">
+          <div class="slds-form-element__control">
+            <div class="slds-select_container">
+              <select class="slds-select" id="select-02" [(ngModel)]="convertedTo" (change)="convert()">
+                <option *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <div class="slds-clearfix">
+    <div class="slds-float_right">
+      <a href="http://fixer.io/" target="_blank">Disclaimer</a>
+    </div>
+  </div>
+  <div *ngIf="errorMsg" class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+    <h2>{{errorMsg}}</h2>
+    <button (click)="closeError()" class="slds-button slds-button_icon slds-notify__close slds-button_icon-inverse" title="Close">
+      <svg class="slds-button__icon" aria-hidden="true">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/close.svg" />
+      </svg>
+      <span class="slds-assistive-text">Close</span>
+    </button>
+  </div>
+  <div class="slds-spinner_container" *ngIf="loading">
+    <div role="status" class="slds-spinner slds-spinner_medium">
+      <span class="slds-assistive-text">Loading</span>
+      <div class="slds-spinner__dot-a"></div>
+      <div class="slds-spinner__dot-b"></div>
+    </div>
+  </div>
+</div>
