@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { elementDef } from "@angular/core/src/view/element";
 import { Http, Response } from "@angular/http";
+import "rxjs/add/observable/throw";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/map";
@@ -52,7 +53,7 @@ export class RateService {
       .catch(this.handleError);
   }
 
-  private handleError (error: Response | any) {
+  private handleError(error: Response | any): Observable<any> {
     // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;
     if (error instanceof Response) {

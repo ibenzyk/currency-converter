@@ -1,5 +1,5 @@
 import {DecimalPipe} from "@angular/common";
-import {HttpErrorResponse} from '@angular/common/http';
+import {HttpErrorResponse} from "@angular/common/http";
 import {Component} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {IRate, RateService} from "./rate.service";
@@ -51,6 +51,7 @@ export class DemoCurrencyComponent {
         this.convert();
       },
         (err: HttpErrorResponse | any) => {
+          this.loading = false;
           this.errorMsg = err;
       });
   }
